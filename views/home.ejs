@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="home.css">
+</head>
+<body>
+	<div class="container">
+		<div class="phone">
+			<label class="phonename">TABLET</label>
+			<div class="inner">
+				<div class="screen">
+					<h3 class="title">Simple Weather App</h3>
+					<div class="elements" id="elements">
+						<div class="chatlists" id="weather">
+							<div class="div">
+						 		<div class="div0">
+						 		    <img src="images/cd.png" width="60px" height="60px">
+						 		    <h5 class="desc"><em>No Cloud Update</em></h5>
+						 		</div>
+						 		<div class="div1">
+						 			<h1>45<span>o</span></h1>
+						 		</div>
+						 		<div class="div2">
+						 			<h3><em>LOCATION:</em><span> Null</span>
+						 			</h3>
+						 		</div>
+						 	</div>
+						</div>
+						<div class="chatbox">
+							<p><input type="button" name="getlocate" id="getlocate" value="Get weather forcast"></p>
+							<input type="text" id="input" placeholder="Enter a valid City name or City name,Country name">
+						</div>	
+					</div>
+				</div>
+			</div>
+			<table>
+				<td>
+					<tr>
+						<label class="mini"> </label>
+						<label class="center"> O </label>
+						<label class="back"> </label>
+					</tr>
+				</td>
+			</table>
+		</div>
+	</div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="home.js"></script>
+</html>
