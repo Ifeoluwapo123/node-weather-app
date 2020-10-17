@@ -1,11 +1,16 @@
 const socket = io('/');
 var input = document.getElementById('input');
-var page = document.getElementById('weather');
+var page = document.getElementById('contact');
+var loading = document.getElementById('loading');
+var body = document.getElementById('page-top');
+var button = document.getElementById('getlocate');
+
+loading.style.display = 'none';
 
 //set the default image background
 function backgroundImage(image){
-	page.style.backgroundImage = `url("images/${image}")`;
-	page.style.backgroundPosition = "center";
+    page.style.backgroundImage = `url("images/${image}")`;
+    page.style.backgroundPosition = "center";
     page.style.backgroundRepeat = "repeat-x";
     page.style.backgroundSize = "cover";
     page.style.backgroundRepeat = "repeat-x";
@@ -29,27 +34,43 @@ function noDesc(data){
 		backgroundImage('cloud.jpeg');
 }
 
-backgroundImage('cloud.jpeg');
+//set initial background image
+backgroundImage('map-image.png');
 
 var c = function(pos){
 	let lat = pos.coords.latitude,
 		lng = pos.coords.longitude,
 		coords = lat +' '+ lng;
-		socket.emit('coordinates', coords);
-		console.log('lat',lat);
-		console.log('lat',lng);
+	socket.emit('coordinates', coords);
 }
 
-document.getElementById('getlocate').onclick = function(){
+//loading via spinner
+function spinner(condition){
+	if(condition === true){
+		button.disabled = true;
+		input.disabled = true;
+		loading.style.display = '';
+		body.style.opacity = '0.6';
+	}else{
+		button.disabled = false;
+		input.disabled = false;
+		loading.style.display = 'none';
+		body.style.opacity = '';
+	}
+}
+
+button.onclick = function(){
 	navigator.geolocation.getCurrentPosition(c);
+	spinner(true);
 	return false;
 }
 
 input.addEventListener('keypress', event =>{
 	if(event.keyCode == 13){
+		spinner(true);
 		let city = event.target.value;
 		socket.emit('city',city);
-		event.target.value = " ";
+		event.target.value = '';
 	}
 });
 
@@ -86,15 +107,14 @@ function wallpaper(description){
 			backgroundImage('mist.gif');
 			break;
 		default:
-			noDesc(description);
-			
+			noDesc(description);	
 	}
 	
 }
 
 socket.on('weather', data =>{
-	console.log(data);
 	page.style.backgroundImage = '';
+	spinner(false);
 	wallpaper(data.desc);
 	let div  =  document.createElement('div');
 	let div0 = document.createElement('div');
@@ -104,7 +124,6 @@ socket.on('weather', data =>{
 	let img = document.createElement('img');
 	let h1 = document.createElement('h1');
 	let span1 = document.createElement('span');
-	let span2 = document.createElement('span');
 	let h4 = document.createElement('h3');
 	let em = document.createElement('em');
 	let em1 = document.createElement('em');
@@ -135,5 +154,7 @@ socket.on('weather', data =>{
 
 	page.appendChild(div);
 });
+
+                        
 
                         
